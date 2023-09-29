@@ -2,6 +2,11 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 
 
+
+// To use the localStorage
+// 1. we need to se the state in local sotrage everytime we modify the data
+// 2. we need to get the initial state to from the local storage
+// 3. we need to take care of the type conversion to string and then back to the json format
 export type Todo={
     id:number;
     todo:string;
@@ -21,8 +26,28 @@ export type TodoContextType={
 export const TodoContext=createContext<TodoContextType|null>( null);
 
 export const TodoContextProvider=({children}:{children:ReactNode})=>{
-    const [todos, setTodos] = useState<Todo[]>([]);
-    const [count,setCount]=useState(0);
+    // so that we can get the todos from the lcoalstorage
+    const [todos, setTodos] = useState<Todo[]>(()=>{
+        const storedTodos=localStorage.getItem("todos");
+        if(storedTodos==null)
+        {
+            return [];
+        }
+        else{
+            return JSON.parse(storedTodos);
+        }
+    });
+    // We need to get the count form the local storage
+    const [count,setCount]=useState(()=>{
+        const storedCount=localStorage.getItem('count');
+        if(storedCount==null)
+        {
+            return 0;
+        }
+        else{
+            return parseFloat(storedCount);
+        }
+    });
 
     // to add the todos to the list tof todos
     const handleAddTodos:(todo:string)=>void=(todo:string)=>{
@@ -35,17 +60,24 @@ export const TodoContextProvider=({children}:{children:ReactNode})=>{
                 status:false,
                 date: new Date()
             },...prev]
+            localStorage.setItem("todos",JSON.stringify(newTodo));
+            setCount(()=>{
+                return count+1;
+            });
+            localStorage.setItem("count",count.toString());
             return newTodo;
         });
-        setCount(count+1);
+
     }
 
     // to handle the checkbox in the todo
     const handleCompleteTodo=(id:number)=>{
         setTodos((prev)=>{
-            return (prev.map((task)=>{
+            const newTodos=(prev.map((task)=>{
                 return (task.id===id)?{...task,status:!task.status}:task;
             }));
+            localStorage.setItem("todos",JSON.stringify(newTodos));
+            return newTodos
         })
     }
 
@@ -54,10 +86,12 @@ export const TodoContextProvider=({children}:{children:ReactNode})=>{
         console.log(id);
         
         setTodos((prev)=>{
-            return (prev.filter((task)=>{
+            const newTodos= (prev.filter((task)=>{
                 return task.id!=id;
             }))
-        })
+            localStorage.setItem("todos",JSON.stringify(newTodos));
+            return newTodos
+        });
     }
 
     return (

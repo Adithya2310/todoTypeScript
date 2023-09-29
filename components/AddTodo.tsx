@@ -2,7 +2,7 @@
 import React,{useState} from 'react'
 import Displaytodos from './Displaytodos';
 import { useTodo } from '@/context';
-import { todo } from 'node:test';
+import NavBar from "@/components/NavBar"
 
 const AddTodo = () => {
     const [task, setTask] = useState("");
@@ -28,11 +28,11 @@ const AddTodo = () => {
         <div>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="">
-                    Add: 
-                    <input type="text" placeholder="Enter some text" value={task} onChange={handleChange}/>
+                    <input type="text" placeholder="Enter your Todo" value={task} onChange={handleChange}/>
                     <button type='submit'>Add</button>
                 </label>
             </form>
+            <NavBar/>
             <Displaytodos/>
         </div>
     </div>

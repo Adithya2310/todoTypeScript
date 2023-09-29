@@ -86,6 +86,7 @@ body {
 }
 
 body {
+  font-family: cursive, sans-serif;
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -99,6 +100,73 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+
+
+div h1{
+  font-family: cursive;
+  margin: 20px 0;
+  color: rgb(31, 229, 31);
+}
+
+/* to target the add part
+ */
+div form label {
+  display: flex;
+  margin: 20px 0;
+  gap: 2rem;
+  font-size: 20px;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+}
+
+div form label input{
+  font-family: cursive;
+  padding: 10px;
+  outline: none;
+  border: #0071ff33;
+  border-radius: 10px;
+  min-width: 250px;
+}
+
+div form label button{
+  font-family: cursive;
+  padding: 0.5rem 1rem;
+  background-color: rgb(5, 194, 5);
+  outline: none;
+  border: none;
+  border-radius: 5px;
+  color: white;
+}
+
+div form label input::placeholder{
+  font-family: cursive;
+}
+
+div form label button:hover{
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.navbar{
+  font-family: cursive;
+  padding: 0 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  margin: 25px 0;
+  font-size: 20px;
+  border-bottom: #00000020 solid;
+}
+
+.navbar .active{
+  z-index: 5;
+  color: rgb(4, 206, 4);
+  border-bottom: rgb(4, 206, 4) solid 5px;
+  padding-bottom: 10px;
+}
+
+
 
 @media (prefers-color-scheme: dark) {
   html {
